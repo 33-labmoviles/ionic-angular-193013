@@ -8,11 +8,16 @@ import { ExploreContainerComponentModule } from '../explore-container/explore-co
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 
+import { AlumnosComponentModule } from '../alumnos/alumnos.component.module';
+import { AlumnoDetallesComponentModule } from '../alumno.detalles/alumno.detalles.component.module';
+
 @NgModule({
   imports: [
     IonicModule,
     CommonModule,
     FormsModule,
+    AlumnosComponentModule,
+    AlumnoDetallesComponentModule,
     ExploreContainerComponentModule,
     Tab2PageRoutingModule
   ],
