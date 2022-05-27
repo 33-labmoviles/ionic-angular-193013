@@ -1,49 +1,27 @@
-import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-tab2',
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page {
+export class Tab2Page implements OnInit{
 
-  constructor() {}
-  alumnoslista= [
-    {
-      "nombre": "Diego",
-      "apellido": "Jasso",
-      "matricula" : "123ABC"
-    },
-    {
-     "nombre": "Sergio",
-     "apellido": "Gutierrez",
-     "matricula" : "asdadas"
-   },
-   {
-     "nombre": "Luis",
-     "apellido": "Tamez",
-     "matricula" : "fgddsfafd"
-   },
-   {
-     "nombre": "Abraham",
-     "apellido": "Moreno",
-     "matricula" : "45fdfsfd"
-   },
-   {
-     "nombre": "Aylin",
-     "apellido": "Demetci",
-     "matricula" : "asfdsdf2"
-   },
-   {
-     "nombre": "Luis",
-     "apellido": "Martinez",
-     "matricula" : "1sdfsff"
-   },
-   {
-     "nombre": "Manuel",
-     "apellido": "Juarez",
-     "matricula" : "123456"
-   },
-   ];
-  
+  constructor(private http: HttpClient) {}
+
+  ngOnInit(): void {
+    this.getAlumnos();
+  }
+
+  alumnoslista: any = [];
+
+  getAlumnos(){
+    return this.http.get('https://laboratiorioapps-default-rtdb.firebaseio.com/alumnos.json').subscribe(res=>{
+      const alumnoRes: any=res;
+      const alumnosArray=Object.keys(res).forEach((key:any)=>{
+      (this.alumnoslista).push(alumnoRes[key]);
+     });
+   });
+  }
 }

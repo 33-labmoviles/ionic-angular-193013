@@ -9,7 +9,7 @@ const routes: Routes = [
     component: Tab2Page
   },
   {
-  path: 'alumno.detalles/:id',
+  path: 'alumno.detalles',
   component: AlumnoDetallesComponent,
   }
 ];

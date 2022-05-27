@@ -1,65 +1,28 @@
-import { Component, Input , OnChanges} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
   styleUrls: ['tab1.page.scss']
 })
-export class Tab1Page {
 
-  constructor() {}
-  alumnos= [
-    {
-      "nombre": "Diego",
-      "apellido": "Jasso",
-      "matricula" : "123ABC"
-    },
-    {
-     "nombre": "Sergio",
-     "apellido": "Gutierrez",
-     "matricula" : "asdadas"
-   },
-   {
-     "nombre": "Luis",
-     "apellido": "Tamez",
-     "matricula" : "fgddsfafd"
-   },
-   {
-     "nombre": "Abraham",
-     "apellido": "Moreno",
-     "matricula" : "45fdfsfd"
-   },
-   {
-     "nombre": "Aylin",
-     "apellido": "Demetci",
-     "matricula" : "asfdsdf2"
-   },
-   {
-     "nombre": "Luis",
-     "apellido": "Martinez",
-     "matricula" : "1sdfsff"
-   },
-   {
-     "nombre": "Manuel",
-     "apellido": "Juarez",
-     "matricula" : "123456"
-   },
-   ];
-  
+export class Tab1Page implements OnInit{
 
-  @Input() nombre: string = "";
-  @Input() apellido: string = "";
-  @Input() matricula: string = "";
+  constructor(private http: HttpClient) {}
 
-  agregar_alumno(): void{
-    var nuevoAlumno : any = {
-      "nombre": this.nombre,
-      "apellido": this.apellido,
-      "matricula": this.matricula
+    ngOnInit(): void {
+     this.getAlumnos();
     }
-    this.alumnos.push(nuevoAlumno);
-    this.alumnos.sort();
-    console.log(this.alumnos);
-    
+  
+    alumnoslista: any =[];
+  
+    getAlumnos(){
+    return this.http.get('https://laboratiorioapps-default-rtdb.firebaseio.com/alumnos.json').subscribe(res=>{
+      const alumnoRes: any=res;
+      const alumnosArray=Object.keys(res).forEach((key:any)=>{
+      (this.alumnoslista).push(alumnoRes[key]);
+     });
+   });
   }
 }  

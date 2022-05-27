@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-alumno.detalles',
@@ -9,62 +10,36 @@ import { ActionSheetController } from '@ionic/angular';
 })
 export class AlumnoDetallesComponent implements OnInit {
 
-  constructor(private ruta: ActivatedRoute, public actionSheetC: ActionSheetController) { }
+  constructor(private ruta: ActivatedRoute, public actionSheetC: ActionSheetController, private http: HttpClient) { }
+
+  alumnoslista: any =[];
+  indice: string = "";
+  alumnoDetalle: any = {};
+  matricula: any = this.ruta.snapshot.params.id;
 
   ngOnInit() {
-    this.obtenerdetallealumno(this.matricula);
+    this.getAlumnos().subscribe(res => {
+      const alumnoRes: any=res;
+      const alumnosArray=Object.keys(res).forEach((key:any)=>{
+      (this.alumnoslista).push(alumnoRes[key]);
+     });
+      console.log(this.alumnoslista);
+      this.indice = this.alumnoslista.findIndex(x => x.matricula == this.matricula);
+      console.log(this.matricula);
+      console.log(this.indice);
+      //this.alumnoDetalle = this.alumnoslista[this.indice];
+      this.getpersonadetalle(this.indice).subscribe(det => {this.alumnoDetalle=det;})
+      console.log(this.alumnoDetalle);
+    });
   }
+   getAlumnos(){
+    return this.http.get('https://laboratiorioapps-default-rtdb.firebaseio.com/alumnos.json');
+ }
 
-  alumnoslista= [
-    {
-      "nombre": "Diego",
-      "apellido": "Jasso",
-      "matricula" : "123ABC"
-    },
-    {
-     "nombre": "Sergio",
-     "apellido": "Gutierrez",
-     "matricula" : "asdadas"
-   },
-   {
-     "nombre": "Luis",
-     "apellido": "Tamez",
-     "matricula" : "fgddsfafd"
-   },
-   {
-     "nombre": "Abraham",
-     "apellido": "Moreno",
-     "matricula" : "45fdfsfd"
-   },
-   {
-     "nombre": "Aylin",
-     "apellido": "Demetci",
-     "matricula" : "asfdsdf2"
-   },
-   {
-     "nombre": "Luis",
-     "apellido": "Martinez",
-     "matricula" : "1sdfsff"
-   },
-   {
-     "nombre": "Manuel",
-     "apellido": "Juarez",
-     "matricula" : "123456"
-   },
-   ];
-
-  alumnoDetalle: any = {};
-   matricula: string =this.ruta.snapshot.params.id;
-   obtenerdetallealumno(matricula: string):any{
-      console.log(matricula);
-
-      for(let i =0; i<this.alumnoslista.length;i++){
-        if(matricula== this.alumnoslista[i].matricula){
-          this.alumnoDetalle=this.alumnoslista[i];
-        }
-      }
-      return this.alumnoDetalle;
-   }
+ getpersonadetalle(num: string): any {
+  return this.http.get('https://laboratiorioapps-default-rtdb.firebaseio.com/alumnos/'+ num +'.json');
+  
+}
 
    async mostrarActionSheet(){
     const actionSheet = await this.actionSheetC.create({

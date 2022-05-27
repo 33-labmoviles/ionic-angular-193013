@@ -1,52 +1,28 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-alumnos',
   templateUrl: './alumnos.component.html',
   styleUrls: ['./alumnos.component.scss'],
 })
+
 export class AlumnosComponent implements OnInit {
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  ngOnInit() {}
-  
-  alumnoslista= [
-    {
-      "nombre": "Diego",
-      "apellido": "Jasso",
-      "matricula" : "123ABC"
-    },
-    {
-     "nombre": "Sergio",
-     "apellido": "Gutierrez",
-     "matricula" : "asdadas"
-   },
-   {
-     "nombre": "Luis",
-     "apellido": "Tamez",
-     "matricula" : "fgddsfafd"
-   },
-   {
-     "nombre": "Abraham",
-     "apellido": "Moreno",
-     "matricula" : "45fdfsfd"
-   },
-   {
-     "nombre": "Aylin",
-     "apellido": "Demetci",
-     "matricula" : "asfdsdf2"
-   },
-   {
-     "nombre": "Luis",
-     "apellido": "Martinez",
-     "matricula" : "1sdfsff"
-   },
-   {
-     "nombre": "Manuel",
-     "apellido": "Juarez",
-     "matricula" : "123456"
-   },
-   ];
+  ngOnInit(): void {
+    this.getAlumnos();
+  }
 
+  alumnoslista: any = [];
+
+  getAlumnos(){
+    return this.http.get('https://laboratiorioapps-default-rtdb.firebaseio.com/alumnos.json').subscribe(res=>{
+      const alumnoRes: any=res;
+      const alumnosArray=Object.keys(res).forEach((key:any)=>{
+      (this.alumnoslista).push(alumnoRes[key]);
+     });
+   });
+  }
 }
