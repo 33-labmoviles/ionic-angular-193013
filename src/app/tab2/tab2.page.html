@@ -14,7 +14,7 @@
   </ion-header>
 
   <ion-list>
-    <ion-item *ngFor = "let alumno of alumnos" [routerLink]="['/alumno-detalles', alumno.matricula]">
+    <ion-item *ngFor = "let alumno of alumnoslista" [routerLink]="['/alumno.detalles', alumno.matricula]">
       <ion-img src = "assets/FCFM_logo.png" ></ion-img>
       <ion-label ><strong>{{alumno.nombre}}</strong></ion-label>
     </ion-item>

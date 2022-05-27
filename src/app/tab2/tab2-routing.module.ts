@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AlumnoDetallesComponentModule } from '../alumno.detalles/alumno.detalles.component.module';
+import { AlumnoDetallesComponent } from '../alumno.detalles/alumno.detalles.component';
 import { Tab2Page } from './tab2.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: Tab2Page,
+    component: Tab2Page
   },
   {
-  path: 'alumno-detalles',
-  component: AlumnoDetallesComponentModule
+  path: 'alumno.detalles/:id',
+  component: AlumnoDetallesComponent,
   }
 ];
 
