@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ActionSheetController } from '@ionic/angular';
 import { HttpClient } from '@angular/common/http';
+import { Location, registerLocaleData } from '@angular/common';
+import { getDatabase, onValue, ref, remove } from 'firebase/database';
+import { Database } from '@angular/fire/database';
 
 @Component({
   selector: 'app-alumno.detalles',
@@ -10,36 +13,25 @@ import { HttpClient } from '@angular/common/http';
 })
 export class AlumnoDetallesComponent implements OnInit {
 
-  constructor(private ruta: ActivatedRoute, public actionSheetC: ActionSheetController, private http: HttpClient) { }
+  constructor(private ruta: ActivatedRoute, public actionSheetC: ActionSheetController) { }
 
   alumnoslista: any =[];
-  indice: string = "";
   alumnoDetalle: any = {};
-  matricula: any = this.ruta.snapshot.params.id;
+  matricula: string = this.ruta.snapshot.params.id;
 
   ngOnInit() {
-    this.getAlumnos().subscribe(res => {
-      const alumnoRes: any=res;
-      const alumnosArray=Object.keys(res).forEach((key:any)=>{
-      (this.alumnoslista).push(alumnoRes[key]);
-     });
-      console.log(this.alumnoslista);
-      this.indice = this.alumnoslista.findIndex(x => x.matricula == this.matricula);
-      console.log(this.matricula);
-      console.log(this.indice);
-      //this.alumnoDetalle = this.alumnoslista[this.indice];
-      this.getpersonadetalle(this.indice).subscribe(det => {this.alumnoDetalle=det;})
-      console.log(this.alumnoDetalle);
+    const db = getDatabase();
+    const auxdetalle = ref(db ,'alumnos/' + this.matricula);
+    onValue(auxdetalle, (aux)=>{
+      this.alumnoDetalle = aux.val();
     });
   }
-   getAlumnos(){
-    return this.http.get('https://laboratiorioapps-default-rtdb.firebaseio.com/alumnos.json');
- }
 
- getpersonadetalle(num: string): any {
-  return this.http.get('https://laboratiorioapps-default-rtdb.firebaseio.com/alumnos/'+ num +'.json');
-  
-}
+  deleteAlum(): any{
+    const db = getDatabase();
+    remove(ref(db, 'alumnos/' + this.matricula))
+    window.history.back();window.location.reload();
+    }
 
    async mostrarActionSheet(){
     const actionSheet = await this.actionSheetC.create({
@@ -54,6 +46,7 @@ export class AlumnoDetallesComponent implements OnInit {
           type: 'delete'
         },
         handler: () => {
+          this.deleteAlum();
           console.log('Delete clicked');
         }
       }, {

@@ -19,7 +19,7 @@
           Nombre:
         </ion-col>
         <ion-col size="10">
-          <ion-input placeholder="Luis" [(ngModel)]="nombre" name="nombre"></ion-input>
+          <ion-input placeholder="Luis" [(ngModel)]="nombre" name="nombre" required> {{nombre.nombre}}></ion-input>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -27,7 +27,7 @@
          Apellido:
         </ion-col>
         <ion-col size="10">
-          <ion-input placeholder="Martinez" [(ngModel)]="apellido" name="apellido"></ion-input>
+          <ion-input placeholder="Martinez" [(ngModel)]="apellido" name="apellido" required> {{apellido.apellido}}></ion-input>
         </ion-col>
       </ion-row>
       <ion-row>
@@ -35,7 +35,7 @@
           Matrícula:
         </ion-col>
         <ion-col size="10">
-          <ion-input placeholder="12283492" [(ngModel)]="matricula" name="matricula"></ion-input>
+          <ion-input placeholder="12283492" [(ngModel)]="matricula" name="matricula" required> {{matricula.matricula}}></ion-input>
         </ion-col>
       </ion-row>
       <ion-row>

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Alumnos y detalles
+      Detalles de alumnos
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -17,8 +17,9 @@
     <ion-item-sliding *ngFor = "let alumno of alumnoslista"> 
       
       <ion-item-options side="start">
-        <ion-item-option color="success" (click)="favorite(item)">
+        <ion-item-option color="success" (click)="editarAlum(alumno)" expandable>
           <ion-icon name="pencil"></ion-icon>
+          Editar Alumno
         </ion-item-option>
       </ion-item-options>
 
@@ -28,12 +29,29 @@
     </ion-item>
 
     <ion-item-options side="end">
-      <ion-item-option color="danger" (click)="share(item)">
+      <ion-item-option color="danger" (click)="deleteAlum(alumno)" expandable>
         <ion-icon name="trash"></ion-icon>
+        Eliminar alumno
       </ion-item-option>
     </ion-item-options>
 
   </ion-item-sliding>
   </ion-list>
+
+  <ion-card *ngIf="estado">
+    <ion-row>
+      Ingrese el nombre:
+      <ion-col>
+        <ion-input placeholder="Ej: Diego Marcelo" [(ngModel)]="nombre" name="name"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      Ingrese el apellido:
+      <ion-col>
+        <ion-input placeholder="Ej: Jasso Sanchez" [(ngModel)]="apellidos" name="lastname"></ion-input>
+      </ion-col>
+    </ion-row>
+    <ion-button (click)="guardarAlum()">Modificar alumno</ion-button>
+  </ion-card>
 
 </ion-content>
