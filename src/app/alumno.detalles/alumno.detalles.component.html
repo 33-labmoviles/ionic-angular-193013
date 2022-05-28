@@ -3,11 +3,11 @@
     <ion-card-title>{{alumnoDetalle.nombre}} {{alumnoDetalle.apellido}}</ion-card-title>
     <ion-card-subtiltle>Matrícula: {{alumnoDetalle.matricula}}</ion-card-subtiltle>
   </ion-card-header>
-  <ion-card-content><img src = "assets/FCFM_logo.png " width ="150px" height="150px"></ion-card-content>
-  <ion-button href = "http://localhost:8100/tabs/tab2">
-    Volver
-  </ion-button>
+  <ion-card-content><img src = "assets/FCFM_logo.png " width ="150px" height="150px">
+  </ion-card-content>
+  <ion-button  onClick="history.go(-1);"> Regresar </ion-button>
   <ion-button (click)="mostrarActionSheet()">
-    Mostrar Opciones
+    Mostrar otras opciones
   </ion-button>
+  
 </ion-card>

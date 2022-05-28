@@ -30,7 +30,7 @@ export class AlumnoDetallesComponent implements OnInit {
   deleteAlum(): any{
     const db = getDatabase();
     remove(ref(db, 'alumnos/' + this.matricula))
-    window.history.back();window.location.reload();
+    window.history.back();
     }
 
    async mostrarActionSheet(){
